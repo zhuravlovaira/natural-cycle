@@ -7,9 +7,12 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prettier:libs": "prettier --check \"src/libs/**/*.{ts,scss,js,html}\"",
-    "prettier:app": "prettier --check \"src/app/**/*.{ts,scss,js,html}\"",
-    "prettier": "run-p prettier:*"
+    "prettier:check:libs": "prettier --check \"src/libs/**/*.{ts,scss,js,html}\"",
+    "prettier:check:app": "prettier --check \"src/app/**/*.{ts,scss,js,html}\"",
+    "prettier:check": "run-p prettier:check:*",
+    "prettier:format:libs": "prettier --write \"src/libs/**/*.{ts,scss,js,html}\"",
+    "prettier:format:app": "prettier --write \"src/app/**/*.{ts,scss,js,html}\"",
+    "prettier:format": "run-p prettier:format:*"
   },
   "private": true,
   "dependencies": {

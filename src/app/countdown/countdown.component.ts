@@ -5,12 +5,19 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import intervalToDuration from 'date-fns/intervalToDuration';
-import {combineLatest, delay, interval, Observable, startWith, Subject, takeUntil} from "rxjs";
-import {finalize, map, tap} from 'rxjs/operators';
-import {Duration, startOfTomorrow} from "date-fns";
+} from '@angular/core'
+import { FormControl, FormGroup } from '@angular/forms'
+import intervalToDuration from 'date-fns/intervalToDuration'
+import {
+  combineLatest,
+  interval,
+  Observable,
+  startWith,
+  Subject,
+  takeUntil,
+} from 'rxjs'
+import { finalize, map } from 'rxjs/operators'
+import { Duration, startOfTomorrow } from 'date-fns'
 
 @Component({
   selector: 'app-countdown',
@@ -19,82 +26,89 @@ import {Duration, startOfTomorrow} from "date-fns";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CountdownComponent implements OnInit, OnDestroy {
-  @HostListener("window:beforeunload") unloadHandler() {
-    this.setDataToStorageOnReload();
+  @HostListener('window:beforeunload') unloadHandler() {
+    this.setDataToStorageOnReload()
   }
-  private readonly destroy$: Subject<void> = new Subject();
-  readonly minDatepickerDate: Date = startOfTomorrow();
+  private readonly destroy$: Subject<void> = new Subject()
+  readonly minDatepickerDate: Date = startOfTomorrow()
   readonly form: FormGroup = new FormGroup({
     eventTitle: new FormControl(),
     endDate: new FormControl(),
-  });
-  readonly maxEventTitleLength: number = 50;
-  readonly countDownInterval: number = 1000;
-  readonly duration$: Observable<Duration> = combineLatest([interval(this.countDownInterval), this.form.get('endDate')!.valueChanges]).pipe(
+  })
+  readonly maxEventTitleLength: number = 50
+  readonly countDownInterval: number = 1000
+  readonly duration$: Observable<Duration> = combineLatest([
+    interval(this.countDownInterval),
+    this.form.get('endDate')!.valueChanges,
+  ]).pipe(
     map(([interval, endDate]: [number, Date]) => this.getDuration(endDate)),
-    finalize(() => this.form.get('endDate')!.reset())
-  );
-  private readonly eventTitleStorageKey: string = 'eventTitle';
-  private readonly endDateStorageKey: string = 'endDate';
+    finalize(() => this.form.get('endDate')!.reset()),
+  )
+  private readonly eventTitleStorageKey: string = 'eventTitle'
+  private readonly endDateStorageKey: string = 'endDate'
 
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.disableEndDateBasedOnEventTitle();
-    this.setInitialDataFromStorage();
+    this.disableEndDateBasedOnEventTitle()
+    this.setInitialDataFromStorage()
   }
 
   private disableEndDateBasedOnEventTitle(): void {
-    this.form.get('eventTitle')!.valueChanges.pipe(takeUntil(this.destroy$), startWith('')).subscribe((eventTitle: string) => {
-      if (eventTitle) {
-        this.form.get('endDate')!.enable({emitEvent: false});
-      }
-      else {
-        this.form.get('endDate')!.disable({emitEvent: false});
-      }
-    });
+    this.form
+      .get('eventTitle')!
+      .valueChanges.pipe(takeUntil(this.destroy$), startWith(''))
+      .subscribe((eventTitle: string) => {
+        if (eventTitle) {
+          this.form.get('endDate')!.enable({ emitEvent: false })
+        } else {
+          this.form.get('endDate')!.disable({ emitEvent: false })
+        }
+      })
   }
 
   private getDuration(endDate: Date): Duration {
     return intervalToDuration({
       start: new Date(),
       end: endDate,
-    });
+    })
   }
 
   private setInitialDataFromStorage(): void {
-    const eventTitle: string | null = localStorage.getItem(this.eventTitleStorageKey);
+    const eventTitle: string | null = localStorage.getItem(
+      this.eventTitleStorageKey,
+    )
 
-    if(eventTitle) {
-      this.form.patchValue({eventTitle});
+    if (eventTitle) {
+      this.form.patchValue({ eventTitle })
       this.changeDetectorRef.detectChanges()
-      this.setEndDateIfExists();
+      this.setEndDateIfExists()
     }
   }
 
   private setEndDateIfExists(): void {
-    const endDate: string | null = localStorage.getItem(this.endDateStorageKey);
+    const endDate: string | null = localStorage.getItem(this.endDateStorageKey)
 
     if (endDate) {
-      this.form.patchValue({endDate: new Date(endDate)})
+      this.form.patchValue({ endDate: new Date(endDate) })
     }
   }
 
   private setDataToStorageOnReload(): void {
-    const eventTitle = this.form.value.eventTitle;
-    const endDate = this.form.value.endDate;
+    const eventTitle = this.form.value.eventTitle
+    const endDate = this.form.value.endDate
 
-    if(eventTitle) {
-      localStorage.setItem(this.eventTitleStorageKey, eventTitle);
-      localStorage.setItem(this.endDateStorageKey, endDate ? endDate : '');
+    if (eventTitle) {
+      localStorage.setItem(this.eventTitleStorageKey, eventTitle)
+      localStorage.setItem(this.endDateStorageKey, endDate ? endDate : '')
     } else {
-      localStorage.setItem(this.eventTitleStorageKey, '');
-      localStorage.setItem(this.endDateStorageKey, '');
+      localStorage.setItem(this.eventTitleStorageKey, '')
+      localStorage.setItem(this.endDateStorageKey, '')
     }
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

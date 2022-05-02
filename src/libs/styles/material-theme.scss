@@ -2,7 +2,7 @@
 
 @include mat.core();
 
-$platte-color-primary:  #fff;
+$platte-color-primary: #fff;
 $primary-text: #000;
 
 $natural-cycle-platte: (
@@ -42,13 +42,14 @@ $natural-cycle-primary: mat.define-palette($natural-cycle-platte);
 $natural-cycle-accent: mat.define-palette($natural-cycle-platte);
 $natural-cycle-warn: mat.define-palette(mat.$red-palette);
 
-$natural-cycle-theme: mat.define-dark-theme((
-  color: (
-    primary: $natural-cycle-primary,
-    accent: $natural-cycle-accent,
-    warn: $natural-cycle-warn,
+$natural-cycle-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $natural-cycle-primary,
+      accent: $natural-cycle-accent,
+      warn: $natural-cycle-warn,
+    ),
   )
-));
+);
 
 @include mat.all-component-themes($natural-cycle-theme);
-

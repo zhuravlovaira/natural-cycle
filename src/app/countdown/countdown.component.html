@@ -1,12 +1,16 @@
 <section class="countdown">
   <div class="countdown__text-block">
-    <span *ngIf="!form.get('eventTitle')?.value; else countDownBlock">Let's count down! Please, fill in the title below</span>
+    <span *ngIf="!form.get('eventTitle')?.value; else countDownBlock"
+      >Let's count down! Please, fill in the title below</span
+    >
 
     <ng-template #countDownBlock>
-      <span class="countdown__title" fitTextInParentHorizontal>Time to {{ form.get('eventTitle')?.value }}</span>
+      <span class="countdown__title" fitTextInParentHorizontal
+        >Time to {{ form.get('eventTitle')?.value }}</span
+      >
 
       <span *ngIf="duration$ | async as duration" class="countdown__duration">
-       {{ duration | formatDuration }}
+        {{ duration | formatDuration }}
       </span>
     </ng-template>
   </div>
@@ -24,7 +28,13 @@
 
     <mat-form-field appearance="outline" class="countdown__input">
       <mat-label>Date</mat-label>
-      <input readonly matInput [matDatepicker]="picker" [min]="minDatepickerDate" formControlName="endDate">
+      <input
+        readonly
+        matInput
+        [matDatepicker]="picker"
+        [min]="minDatepickerDate"
+        formControlName="endDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="form.get('endDate')?.hasError('matDatepickerMin')">
