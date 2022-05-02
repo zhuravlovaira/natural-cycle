@@ -1,0 +1,15 @@
+@import './material-theme';
+@import './reset';
+@import './variables/variables';
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  background-color: $color-primary;
+  font: $font-weight-regular $font-size $font-family-primary;
+  color: #fff;
+}

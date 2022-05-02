@@ -1,0 +1,55 @@
+@import 'src/libs/styles/variables/variables';
+
+.countdown {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__text-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: $color-accent;
+    margin: 0 10px;
+  }
+
+  &__title {
+    font-weight: $font-weight-bold;
+    margin-bottom: 16px;
+  }
+
+  &__duration {
+    font-weight: $font-weight-regular;
+    font-size: 35px;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 48px 48px;
+  }
+}
+
+@media (orientation: landscape) {
+  .countdown {
+    &__form {
+      flex-direction: row;
+    }
+
+    &__input {
+      width: 300px;
+      &:first-child {
+        margin-right: 28px;
+      }
+    }
+
+    &__duration {
+      font-size: 75px;
+    }
+  }
+}
