@@ -1,27 +1,33 @@
-# NaturalCycle
+# NaturalCycles test assignment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
+https://magenta-paletas-24d5da.netlify.app
 
-## Development server
+![img.png](src/assets/screenshot.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![img_1.png](src/assets/screenshot1.png)
 
-## Code scaffolding
+## Links
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can access application by using url: https://magenta-paletas-24d5da.netlify.app
 
-## Build
+Repository: https://github.com/zhuravlovaira/natural-cycle
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Design: https://www.figma.com/file/tupS0Q8tS0ZPJmMgoU66xB/Frontend-Challenge
 
-## Running unit tests
+## Project set up
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If you want to run project locally:
 
-## Running end-to-end tests
+1. Clone repository `git clone https://github.com/zhuravlovaira/natural-cycle.git`
+2. Install dependencies. Run `npm install --save-exact`
+3. Run server: `npm start`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Optional goals
 
-## Further help
+Suggestions on how this solution can be improved:
+* Make builds using capacitor in order to create Hybrid app and run it natively on iOS, Android, and the Web
+* Use another storage. For storing data I went for the easiest option (localStorage) for the sake of saving time. For production deploy I would create a separate storage service and inject it into the component(to comply with dependency inversion principle)  
+* Extend design with conditions like: error messages, max characters size, indication that timer is over. Implementing these features.
+* Write e2e tests
+* Improve unit tests coverage.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
