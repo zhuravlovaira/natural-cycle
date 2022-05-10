@@ -9,7 +9,7 @@
         >Time to {{ form.get('eventTitle')?.value }}</span
       >
 
-      <span *ngIf="duration$ | async as duration" class="countdown__duration">
+      <span *ngIf="duration$ | async as duration" fitTextInParentHorizontal class="countdown__duration">
         {{ duration | formatDuration }}
       </span>
     </ng-template>
