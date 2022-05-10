@@ -26,19 +26,19 @@ export class FitTextInParentHorizontalDirective implements OnInit, OnDestroy {
 
   private readonly reactOnParentSizeChange = () => {
     const textWidth: number = this.elementRef.nativeElement.offsetWidth
-    const parentElementWidth: number | undefined =
+    const divWidth: number | undefined =
       this.elementRef.nativeElement.parentElement?.offsetWidth
-    const divWidth: number = parentElementWidth ? parentElementWidth : 0
-    /**
-     * The ratio between width of the parent block and font size, calculated based on the design specifications
-     **/
-    const fontToBlockRatio: number = 14
-    const initialFontSize: number = divWidth / fontToBlockRatio
+    const screenWidth: number = window.screen.width
+    const parentWidth: number = divWidth ? divWidth : screenWidth
+    const rescaleMargin: number = 10
+
+    if (Math.abs(textWidth - parentWidth) < rescaleMargin) {
+      return
+    }
+
     const currentFontSize: number = this.getFontSize()
-    const scaleFactor: number = divWidth / textWidth
-    const scaledFontSize: number = currentFontSize * scaleFactor
-    const newFontSize: number =
-      scaledFontSize >= initialFontSize ? initialFontSize : scaledFontSize
+    const scaleFactor: number = parentWidth / textWidth
+    const newFontSize: number = currentFontSize * scaleFactor
     this.elementRef.nativeElement.style.fontSize = newFontSize + 'px'
   }
   private readonly observer = new MutationObserver(this.reactOnParentSizeChange)
